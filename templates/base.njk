@@ -7,7 +7,11 @@
 </head>
 <body>
   <header>
-    {% block header %}{% endblock %}
+    {% block header %}
+      <a href="/">Главная</a>
+      <a href="/catalog">Каталог</a>
+      <a href="/about">О нас</a>
+    {% endblock %}
   </header>
   <main>
     {% block content %}{% endblock %}
