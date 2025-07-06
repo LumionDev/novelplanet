@@ -1,21 +1,25 @@
+require('dotenv').config();
 const express = require('express');
+const fs = require('fs');
+const sass = require('sass');
+const nunjucks = require('nunjucks');
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
+
 app.use(express.static('public'));
 
-const nunjucks = require('nunjucks');
-const fs = require('fs');
+const result = sass.compile('./scss/style.scss');
+fs.writeFileSync('./public/style.css', result.css);
 
 nunjucks.configure('templates', {
   autoescape: true,
   express: app
 });
 
-const data = JSON.parse(fs.readFileSync('./data/content.json', 'utf-8'));
-
-const html = nunjucks.render('index.njk', { items: data });
-
-fs.writeFileSync('./public/index.html', html);
+app.get('/', (req, res) => {
+  const index = JSON.parse(fs.readFileSync('./data/index.json', 'utf-8'));
+  res.send(nunjucks.render('index.njk', { items: index }));
+});
 
 app.listen(port, () => {
   console.log(`Сервер запущен на http://localhost:${port}`);
