@@ -1,6 +1,10 @@
 {% extends "base.njk" %}
 
 {%block content%}
-<h1>Ошибка {{ status }}</h1>
-<p>{{ message }}</p>
+    <img src="{{ picture }}" alt="">
+        <h1>Ошибка {{ status }}</h1>
+        <p>{{ message }}</p>
+    {% if status === 401 %}
+        <p>Пожалуйста войдите в аккаунт</p><a href="/login">Войти</a>
+    {% endif %}
 {%endblock%}
