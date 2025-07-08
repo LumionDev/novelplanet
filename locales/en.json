@@ -1,0 +1,7 @@
+{
+    "error_status": "Error",
+    "error_server": "Server error",
+    "error_not_found": "Page not found",
+    "error_unauthorized": "Authorization required",
+    "error_payment_required": "Payment required"
+}

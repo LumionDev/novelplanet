@@ -3,98 +3,152 @@ const express = require('express');
 const fs = require('fs');
 const sass = require('sass');
 const nunjucks = require('nunjucks');
-const app = express();
-const port = process.env.PORT;
-const cookieParser = require('cookie-parser');  
+const i18next = require('i18next');
+const i18nextMiddleware = require('i18next-http-middleware');
+const Backend = require('i18next-fs-backend');
+const cookieParser = require('cookie-parser');
 
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Cookie parser
 app.use(cookieParser());
 
-// Даем браузеру доступ к папке
-app.use(express.static('public'));
+// i18next
+i18next
+  .use(Backend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init({
+    fallbackLng: 'ru',
+    preload: ['ru', 'en'],
+    backend: {
+      loadPath: __dirname + '/locales/{{lng}}.json'
+    },
+    detection: {
+      order: ['cookie', 'querystring', 'header'],
+      caches: ['cookie']
+    }
+  });
 
-// Компиляция SCSS
+app.use(i18nextMiddleware.handle(i18next));
+
+// Middleware: безопасный язык и направление текста
+app.use((req, res, next) => {
+  const rawLang = req.language;
+  const isValidLang = typeof rawLang === 'string' && /^[a-z]{2}(-[A-Z]{2})?$/.test(rawLang);
+  const safeLang = isValidLang ? rawLang : i18next.options.fallbackLng;
+
+  res.locals.lng = safeLang;
+
+  try {
+    res.locals.dir = i18next.dir(safeLang);
+  } catch {
+    res.locals.dir = 'ltr';
+  }
+
+  next();
+});
+
+// SCSS компиляция
 const result = sass.compile('./scss/style.scss');
 fs.writeFileSync('./public/style.css', result.css);
 
-// Настройка Nunjucks
+// Nunjucks
 nunjucks.configure('templates', {
   autoescape: true,
   express: app
 });
 
-// Маршрут для главной страницы
-app.get('/', (req, res, next) => {
-  const currentTheme = req.cookies.theme || null;
+// Статика
+app.use(express.static('public'));
 
-  const dataPath = `./data/index.json`;
-  let items = null;
-
-  if (fs.existsSync(dataPath)) {
-    items = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
-  }
-
-  res.render('index.njk', { items, currentTheme });
-});
-
-// Маршрут для других страниц
-app.get('/:page', (req, res, next) => {
-  const page = req.params.page || 'index';
-
-  if (!fs.existsSync(`./templates/${page}.njk`)) {
-    const err = new Error('Страница не найдена');
-    err.status = 404;
-    return next(err);
-  }
-
-  const dataPath = `./data/${page}.json`;
-  let items = null;
-
-  if (fs.existsSync(dataPath)) {
-    items = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
-  }
-
-  const currentTheme = req.cookies.theme || null;
-  res.render(`${page}.njk`, { items, currentTheme });
-});
-
-// Ловим ошибку 404 и передаем ее в обработчик ошибок
+// Middleware для темы
 app.use((req, res, next) => {
-  const err = new Error('Страница не найдена');
+  res.locals.currentTheme = req.cookies?.theme || null;
+  next();
+});
+
+// Главная
+app.get('/', (req, res) => {
+  res.render('index.njk', {
+    t: req.t,
+    lng: res.locals.lng,
+    dir: res.locals.dir,
+    currentTheme: res.locals.currentTheme
+  });
+});
+
+// Установка языка
+app.get('/set-lang/:lang', (req, res) => {
+  const lang = req.params.lang;
+  const isValidLang = typeof lang === 'string' && /^[a-z]{2}(-[A-Z]{2})?$/.test(lang);
+  if (isValidLang) {
+    res.cookie('i18next', lang, { maxAge: 365 * 24 * 60 * 60 * 1000 });
+  }
+  const redirectTo = req.get('Referer') || '/';
+  res.redirect(redirectTo);
+});
+
+// Переключение темы
+app.get('/theme/:mode', (req, res) => {
+  const mode = req.params.mode;
+  res.cookie('theme', mode, { maxAge: 365 * 24 * 60 * 60 * 1000 });
+  const redirectTo = req.get('Referer') || '/';
+  res.redirect(redirectTo);
+});
+
+// 404
+app.use((req, res, next) => {
+  const err = new Error(req.t('error_not_found'));
   err.status = 404;
   next(err);
 });
-  
+
+// Конфигурация статусов
+const errorConfig = {
+  401: {
+    messageKey: 'error_unauthorized',
+    defaultMessage: 'Требуется авторизация',
+    image: '/media/errors/401.png'
+  },
+  402: {
+    messageKey: 'error_payment_required',
+    defaultMessage: 'Платёж необходим',
+    image: '/media/errors/402.png'
+  },
+  404: {
+    messageKey: 'error_not_found',
+    defaultMessage: 'Страница не найдена',
+    image: '/media/errors/404.png'
+  },
+  500: {
+    messageKey: 'error_server',
+    defaultMessage: 'Ошибка сервера',
+    image: '/media/errors/error.png'
+  }
+};
+
 // Обработчик ошибок
 app.use((err, req, res, next) => {
   const status = err.status || 500;
-  let message = 'Ошибка сервера';
-  let picture = '/media/errors/error.png';
+  const config = errorConfig[status] || errorConfig[500];
+  const t = typeof req.t === 'function' ? req.t : (key) => key;
 
-  if (status === 404) {
-    message = 'Страница не найдена';
-    picture = '/media/errors/404.png';
-  }
-
-  if (status === 401) {
-    message = 'Требуется авторизация';
-    picture = '/media/errors/401.png';
-  }
-
-  if (status === 402) {
-    message = 'Платёж необходим';
-    picture = '/media/errors/402.png';
-  }
-
-  const currentTheme = req.cookies.theme || null;
+  const message = t(config.messageKey) || config.defaultMessage;
+  const picture = config.image;
 
   res.status(status).render('error.njk', {
     status,
     message,
     picture,
-    currentTheme
+    currentTheme: res.locals.currentTheme,
+    t,
+    lng: res.locals.lng,
+    dir: res.locals.dir
   });
 });
 
+
 app.listen(port, () => {
-  console.log(`Сервер запущен на http://localhost:${port}`);
+  console.log(`🚀 Сервер запущен на http://localhost:${port}`);
 });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ lng }}" dir="{{ dir }}">
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Мой проект{% endblock %}</title>
@@ -62,6 +62,7 @@
           </button>
         {% endif %}
       </div>
+      <a href="/set-lang/ru">RU</a> | <a href="/set-lang/en">EN</a>
     {% endblock %}
   </header>
   <main>
