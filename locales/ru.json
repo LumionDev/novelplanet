@@ -1,0 +1,8 @@
+{
+    "error_status": "Ошибка",
+    "error_server": "Ошибка сервера",
+    "error_not_found": "Страница не найдена",
+    "error_unauthorized": "Требуется авторизация",
+    "error_payment_required": "Платёж необходим"
+}
+
