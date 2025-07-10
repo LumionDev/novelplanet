@@ -71,7 +71,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
 
   let deviceType = req.cookies.deviceType || null;
-
+  console.log('📦 User-Agent:', req.headers['user-agent']);
   if (!deviceType) {
     const md = new mobileDetect(req.headers['user-agent']);
     deviceType = md.mobile() ? 'mobile' : 'desktop';
