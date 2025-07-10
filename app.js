@@ -76,6 +76,7 @@ app.use((req, res, next) => {
     const md = new mobileDetect(req.headers['user-agent']);
     deviceType = md.mobile() ? 'mobile' : 'desktop';
     res.cookie('deviceType', deviceType, { maxAge: 30 * 24 * 60 * 60 * 1000});
+    console.log('📱 Установлена cookie deviceType:', deviceType);
   }
 
   res.locals.deviceType = deviceType;
