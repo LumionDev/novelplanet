@@ -71,12 +71,10 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
 
   let deviceType = req.cookies.deviceType || null;
-  console.log('📦 User-Agent:', req.headers['user-agent']);
   if (!deviceType) {
     const md = new mobileDetect(req.headers['user-agent']);
     deviceType = md.mobile() ? 'mobile' : 'desktop';
     res.cookie('deviceType', deviceType, { maxAge: 30 * 24 * 60 * 60 * 1000});
-    console.log('📱 Установлена cookie deviceType:', deviceType);
   }
 
   res.locals.deviceType = deviceType;
@@ -166,6 +164,6 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`🚀 Сервер запущен на http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`🚀 Сервер доступен`);
 });

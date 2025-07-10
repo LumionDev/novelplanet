@@ -1,4 +1,4 @@
-// ✅ Чтение куки по ключу
+// Чтение куки по ключу
 function getCookie(name) {
   const cookies = document.cookie.split('; ');
   for (const c of cookies) {
@@ -8,23 +8,23 @@ function getCookie(name) {
   return null;
 }
 
-// ✅ Установка куки
+// Установка куки
 function setCookie(name, value, days = 365) {
   const maxAge = days * 24 * 60 * 60;
   document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Lax`;
 }
 
-// ✅ Удаление куки
+// Удаление куки
 function deleteCookie(name) {
   document.cookie = `${name}=; path=/; max-age=0`;
 }
 
-// ✅ Применение темы
+// Применение темы
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
 }
 
-// ✅ Системная тема
+// Системная тема
 function applySystemTheme() {
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   applyTheme(prefersDark ? 'dark' : 'light');
@@ -36,7 +36,7 @@ function applySystemTheme() {
   });
 }
 
-// ✅ Инициализация при загрузке
+// Инициализация при загрузке
 window.addEventListener('DOMContentLoaded', () => {
   const theme = getCookie('theme');
   theme ? applyTheme(theme) : applySystemTheme();
@@ -73,9 +73,19 @@ window.addEventListener('DOMContentLoaded', () => {
       indicators[i].classList.toggle('active', lang === currentLang);
     }
   });
+
+    const menu = document.getElementById('nav-menu');
+    const modal_phone = document.getElementById('nav-modal-phone');
+
+    if (menu && modal_phone) {
+    menu.addEventListener('click', () => {
+        console.log('📲 Клик по меню!');
+        modal_phone.classList.toggle('active');
+    });
+    }
 });
 
-// ✅ Обработчики темы
+// Обработчики темы
 document.getElementById('theme-light')?.addEventListener('click', () => {
   setCookie('theme', 'light');
   applyTheme('light');
