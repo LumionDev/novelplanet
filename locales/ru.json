@@ -3,6 +3,12 @@
     "error_server": "Ошибка сервера",
     "error_not_found": "Страница не найдена",
     "error_unauthorized": "Требуется авторизация",
-    "error_payment_required": "Платёж необходим"
+    "error_payment_required": "Платёж необходим",
+    "nav_shop": "Магазин",
+    "nav_news": "Новости",
+    "nav_faq": "FAQ",
+    "nav_support": "Поддержка",
+    "nav_developers": "Разработчики",
+    "nav_rules": "Правила",
+    "nav_services": "Сервисы"
 }
-

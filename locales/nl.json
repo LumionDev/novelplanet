@@ -1,0 +1,14 @@
+{
+  "error_status": "Fout",
+  "error_server": "Serverfout",
+  "error_not_found": "Pagina niet gevonden",
+  "error_unauthorized": "Authenticatie vereist",
+  "error_payment_required": "Betaling vereist",
+  "nav_shop": "Winkel",
+  "nav_news": "Nieuws",
+  "nav_faq": "FAQ",
+  "nav_support": "Ondersteuning",
+  "nav_developers": "Ontwikkelaars",
+  "nav_rules": "Regels",
+  "nav_services": "Diensten"
+}

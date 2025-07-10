@@ -7,7 +7,9 @@
     "i18next-express-middleware": "^2.0.0",
     "i18next-fs-backend": "^2.6.0",
     "i18next-http-middleware": "^3.7.4",
-    "nunjucks": "^3.2.4"
+    "mobile-detect": "^1.4.5",
+    "nunjucks": "^3.2.4",
+    "simple-git": "^3.28.0"
   },
   "name": "novelplanet",
   "version": "1.0.0",

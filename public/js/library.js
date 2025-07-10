@@ -65,6 +65,27 @@ document.getElementById('theme-system')?.addEventListener('click', () => {
     location.reload();
 });
 
+const logo = document.getElementById('language-icon');
+const modal = document.getElementById('language-modal');
+const links = document.querySelectorAll('.language-link');
+const indicators = document.querySelectorAll('.language-indicator');
+
+// Открытие/закрытие модального окна
+logo.addEventListener('click', (e) => {
+    modal.classList.toggle('visible');
+});
+
+// Активный индикатор выбранного языка
+const currentLang = window.location.pathname.includes('/set-lang/ru') ? 'ru' :
+    window.location.pathname.includes('/set-lang/en') ? 'en' :
+    document.documentElement.lang || 'ru';
+
+links.forEach((link, i) => {
+    const lang = link.getAttribute('href').split('/').pop();
+    indicators[i].classList.toggle('active', lang === currentLang);
+});
+
+
 // Прелоадер
 window.addEventListener('load', () => {
     const loader = document.getElementById('preloader');

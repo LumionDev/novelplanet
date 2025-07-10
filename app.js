@@ -7,7 +7,9 @@ const i18next = require('i18next');
 const i18nextMiddleware = require('i18next-http-middleware');
 const Backend = require('i18next-fs-backend');
 const cookieParser = require('cookie-parser');
-
+const simpleGit = require('simple-git');
+const git = simpleGit();
+const mobileDetect = require('mobile-detect');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -68,13 +70,29 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+
+  let deviceType = req.cookies.deviceType || null;
+
+  if (!deviceType) {
+    const md = new mobileDetect(req.headers['user-agent']);
+    deviceType = md.mobile() ? 'mobile' : 'desktop';
+    res.cookie('deviceType', deviceType, { maxAge: 30 * 24 * 60 * 60 * 1000});
+  }
+
+  res.locals.deviceType = deviceType;
+  next();
+});
+
 // Главная
 app.get('/', (req, res) => {
+
   res.render('index.njk', {
     t: req.t,
     lng: res.locals.lng,
     dir: res.locals.dir,
-    currentTheme: res.locals.currentTheme
+    currentTheme: res.locals.currentTheme,
+    deviceType: res.locals.deviceType
   });
 });
 
@@ -152,3 +170,42 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`🚀 Сервер запущен на http://localhost:${port}`);
 });
+
+
+// Функция для получения информации с GitHub в указанной ветке
+// async function getPackageInfoFromBranch(branchName = 'alpha-version') {
+//   try {
+//     await git.fetch();
+//     await git.checkout(branchName);
+
+//     const data = fs.readFileSync('package.json', 'utf8');
+//     const pkg = JSON.parse(data);
+
+//     return {
+//       name: pkg.name || null,
+//       version: pkg.version || null,
+//       description: pkg.description || null,
+//       author: pkg.author || null,
+//       scripts: pkg.scripts || {},
+//       dependencies: pkg.dependencies || {},
+//       devDependencies: pkg.devDependencies || {}
+//     };
+//   } catch (err) {
+//     console.error(`Ошибка при чтении package.json из ветки "${branchName}":`, err);
+//     return null;
+//   }
+// }
+
+// // Middleware для получения информации о пакете
+// app.use(async (req, res, next) => {
+//   const branch = req.query.branch || 'alpha-version';
+
+//   try {
+//     const info = await getPackageInfoFromBranch(branch);
+//     res.locals.packageInfo = info;
+//   } catch (err) {
+//     res.locals.packageInfo = null;
+//   }
+
+//   next();
+// });
