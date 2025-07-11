@@ -68,19 +68,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-
-  let deviceType = req.cookies.deviceType || null;
-  if (!deviceType) {
-    const md = new mobileDetect(req.headers['user-agent']);
-    deviceType = md.mobile() ? 'mobile' : 'desktop';
-    res.cookie('deviceType', deviceType, { maxAge: 30 * 24 * 60 * 60 * 1000});
-  }
-
-  res.locals.deviceType = deviceType;
-  next();
-});
-
 // Главная
 app.get('/', (req, res) => {
 
@@ -89,7 +76,6 @@ app.get('/', (req, res) => {
     lng: res.locals.lng,
     dir: res.locals.dir,
     currentTheme: res.locals.currentTheme,
-    deviceType: res.locals.deviceType
   });
 });
 

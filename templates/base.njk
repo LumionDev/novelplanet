@@ -12,7 +12,6 @@
   </div>
   <header>
     {% block header %}
-      {% if deviceType != 'mobile' %}
         <nav>
             <a href="/" class="nav-logo">
               <div class="logo-icon">
@@ -71,7 +70,7 @@
                 {% endif %}
               </div>
               <div class="switch-language">
-                <div class="language-icon" id="language-icon">
+                <div class="language-icon" id="language-icon" title="Выбрать язык">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6.23509 6.45329C4.85101 7.89148 4 9.84636 4 12C4 16.4183 7.58172 20 12 20C13.0808 20 14.1116 19.7857 15.0521 19.3972C15.1671 18.6467 14.9148 17.9266 14.8116 17.6746C14.582 17.115 13.8241 16.1582 12.5589 14.8308C12.2212 14.4758 12.2429 14.2035 12.3636 13.3943L12.3775 13.3029C12.4595 12.7486 12.5971 12.4209 14.4622 12.1248C15.4097 11.9746 15.6589 12.3533 16.0043 12.8777C16.0425 12.9358 16.0807 12.9928 16.1198 13.0499C16.4479 13.5297 16.691 13.6394 17.0582 13.8064C17.2227 13.881 17.428 13.9751 17.7031 14.1314C18.3551 14.504 18.3551 14.9247 18.3551 15.8472V15.9518C18.3551 16.3434 18.3168 16.6872 18.2566 16.9859C19.3478 15.6185 20 13.8854 20 12C20 8.70089 18.003 5.8682 15.1519 4.64482C14.5987 5.01813 13.8398 5.54726 13.575 5.91C13.4396 6.09538 13.2482 7.04166 12.6257 7.11976C12.4626 7.14023 12.2438 7.12589 12.012 7.11097C11.3905 7.07058 10.5402 7.01606 10.268 7.75495C10.0952 8.2232 10.0648 9.49445 10.6239 10.1543C10.7134 10.2597 10.7307 10.4547 10.6699 10.6735C10.59 10.9608 10.4286 11.1356 10.3783 11.1717C10.2819 11.1163 10.0896 10.8931 9.95938 10.7412C9.64554 10.3765 9.25405 9.92233 8.74797 9.78176C8.56395 9.73083 8.36166 9.68867 8.16548 9.64736C7.6164 9.53227 6.99443 9.40134 6.84992 9.09302C6.74442 8.8672 6.74488 8.55621 6.74529 8.22764C6.74529 7.8112 6.74529 7.34029 6.54129 6.88256C6.46246 6.70541 6.35689 6.56446 6.23509 6.45329ZM12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22Z" fill="black"/>
                   </svg>
@@ -88,6 +87,11 @@
                   </li>
                 </ul>
               </div>
+              <a href="/login" class="nav-login" title="Войти в аккаунт">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z" fill="white"/>
+                </svg>
+              </a>
             </div>
         </nav>
         <nav>
@@ -101,8 +105,7 @@
                 <li><a href="/services">{{ t("nav_services") }}</a></li>
             </ul>
         </nav>
-      {% else %}
-        <nav>
+        <nav id="nav-phone">
           <a href="/" class="nav-logo">
               <div class="logo-icon">
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -124,6 +127,7 @@
           </div>
         </nav>
         <nav id="nav-modal-phone" class="nav-modal">
+          <h1>{{ t("nav_text_navigation") }}</h1>
           <ul class="nav-list">
               <li><a href="/">{{ t("nav_shop") }}</a></li>
               <li><a href="/news">{{ t("nav_news") }}</a></li>
@@ -133,8 +137,67 @@
               <li><a href="/rules">{{ t("nav_rules") }}</a></li>
               <li><a href="/services">{{ t("nav_services") }}</a></li>
           </ul>
+          <h1>{{ t("nav_text_settings") }}</h1>
+          <div class="nav-other-modal">
+            <ul class="nav-list">
+              <li><a href="/login">{{ t("nav_login") }}</a></li>
+            </ul>
+            <ul class="language-modal" id="language-modal">
+                <li class="language-item">
+                  <span><div class="language-indicator"></div><a href="/set-lang/ru" class="language-link">Русский</a></span>
+                </li>
+                <li class="language-item">
+                  <span><div class="language-indicator"></div><a href="/set-lang/en" class="language-link">English</a></span>
+                </li>
+                <li class="language-item">
+                  <span><div class="language-indicator"></div><a href="/set-lang/nl" class="language-link">Nederlands</a></span>
+                </li>
+            </ul>
+            <div class="switch-theme">
+                {% if currentTheme == 'light' %}
+                  <button id="theme-light-phone" class="theme-button" title="Светлая тема" disabled>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604L19.0711 3.51472ZM5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711L5.63604 16.9497ZM23 11V13H20V11H23ZM4 11V13H1V11H4Z" fill="black"/>
+                    </svg>
+                  </button>
+                {% else %}
+                  <button id="theme-light-phone" class="theme-button" title="Светлая тема">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604L19.0711 3.51472ZM5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711L5.63604 16.9497ZM23 11V13H20V11H23ZM4 11V13H1V11H4Z" fill="black"/>
+                    </svg>
+                  </button>
+                {% endif %}
+
+                {% if currentTheme == 'dark' %}
+                  <button id="theme-dark-phone" class="theme-button" title="Темная тема" disabled>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11.3807 2.01855C9.91573 3.38737 9 5.33659 9 7.49968C9 11.6418 12.3579 14.9997 16.5 14.9997C18.6631 14.9997 20.6123 14.084 21.9811 12.619C21.6613 17.8534 17.3149 21.9997 12 21.9997C6.47715 21.9997 2 17.5225 2 11.9997C2 6.68483 6.14629 2.33838 11.3807 2.01855Z" fill="black"/>
+                    </svg>
+                  </button>
+                {% else %}
+                  <button id="theme-dark-phone" class="theme-button" title="Темная тема">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 7C10 10.866 13.134 14 17 14C18.9584 14 20.729 13.1957 21.9995 11.8995C22 11.933 22 11.9665 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C12.0335 2 12.067 2 12.1005 2.00049C10.8043 3.27098 10 5.04157 10 7ZM4 12C4 16.4183 7.58172 20 12 20C15.0583 20 17.7158 18.2839 19.062 15.7621C18.3945 15.9187 17.7035 16 17 16C12.0294 16 8 11.9706 8 7C8 6.29648 8.08133 5.60547 8.2379 4.938C5.71611 6.28423 4 8.9417 4 12Z" fill="black"/>
+                    </svg>
+                  </button>
+                {% endif %}
+
+                {% if currentTheme == null %}
+                  <button id="theme-system-phone" class="theme-button" title="Системная тема" disabled>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13 18V20H17V22H7V20H11V18H2.9918C2.44405 18 2 17.5511 2 16.9925V4.00748C2 3.45107 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44892 22 4.00748V16.9925C22 17.5489 21.5447 18 21.0082 18H13Z" fill="black"/>
+                    </svg>
+                  </button>
+                {% else %}
+                  <button id="theme-system-phone" class="theme-button" title="Системная тема">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 16H20V5H4V16ZM13 18V20H17V22H7V20H11V18H2.9918C2.44405 18 2 17.5511 2 16.9925V4.00748C2 3.45107 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44892 22 4.00748V16.9925C22 17.5489 21.5447 18 21.0082 18H13Z" fill="black"/>
+                    </svg>
+                  </button>
+                {% endif %}
+            </div>
+          </div>
         </nav>
-      {% endif %}
     {% endblock %}
   </header>
   <main>

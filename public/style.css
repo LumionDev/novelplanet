@@ -121,6 +121,18 @@ nav {
   align-items: center;
   justify-content: center;
 }
+.nav-logo .logo-icon {
+  height: 30px;
+}
+.nav-logo .logo-icon svg {
+  height: max-content;
+}
+.nav-logo .logo-name {
+  height: 31px;
+}
+.nav-logo .logo-name svg {
+  height: max-content;
+}
 .nav-logo .logo-icon svg path {
   fill: var(--color-primary);
 }
@@ -258,9 +270,155 @@ nav {
   justify-content: center;
 }
 
-@media screen and (max-width: 768px) {
+.nav-login {
+  width: 24px;
+  height: 24px;
+}
+.nav-login svg path {
+  fill: var(--color-text);
+}
+
+nav:nth-child(3) {
+  top: 0;
+  padding: 16px;
+  width: 100%;
+  font-weight: 400;
+  font-family: "Inter", sans-serif;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-hover-bg);
+}
+nav:nth-child(3).visible {
+  display: flex;
+}
+
+nav:nth-child(4) {
+  width: 100dvw;
+  height: 100dvh;
+  padding: 16px;
+  gap: 16px;
+  background-color: var(--color-bg);
+  overflow: scroll;
+  display: none;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-hover-bg) var(--color-bg);
+}
+nav:nth-child(4) h1 {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--color-text);
+}
+nav:nth-child(4) .nav-other-modal {
+  width: 100%;
+  gap: 16px;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+}
+nav:nth-child(4) .nav-other-modal .switch-theme {
+  border-radius: 8px;
+}
+nav:nth-child(4) .nav-other-modal .language-modal {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  position: unset;
+  height: max-content;
+  padding: 0;
+  border: 0;
+}
+nav:nth-child(4) .nav-other-modal .language-modal li {
+  width: 100%;
+  grid-row: 1;
+}
+nav:nth-child(4) .nav-other-modal .language-modal li:last-child {
+  grid-row: 2;
+  grid-column: span 2;
+}
+nav:nth-child(4) .nav-other-modal .language-modal .language-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+  height: max-content;
+}
+nav:nth-child(4) .nav-other-modal .language-modal .language-item span {
+  display: flex;
+  height: max-content;
+  justify-content: start;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+nav:nth-child(4) .nav-other-modal .language-modal .language-item .language-link {
+  padding: 0;
+}
+nav:nth-child(4) ul {
+  height: max-content;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: start;
+  gap: 16px;
+}
+nav:nth-child(4) ul li {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--color-hover-bg);
+  border-radius: 8px;
+}
+nav:nth-child(4) ul li a {
+  height: 100%;
+  width: 100%;
+  padding: 12px;
+}
+nav:nth-child(4).active {
+  display: flex;
+}
+
+main {
+  width: 100%;
+}
+main img {
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 1024px) {
+  .body-lock {
+    overflow: hidden;
+    width: 100dvw;
+    height: 100dvh;
+  }
+  main {
+    padding-top: 64px;
+  }
+  .nav-menu {
+    width: max-content;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
   .nav-menu svg path {
     fill: var(--color-text);
+  }
+  nav {
+    display: none;
   }
   header {
     z-index: 10;
@@ -269,51 +427,5 @@ nav {
     position: fixed;
     display: flex;
     flex-direction: column;
-  }
-  nav {
-    top: 0;
-    padding: 16px;
-    width: 100%;
-    font-weight: 400;
-    font-family: "Inter", sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--color-bg);
-    border-bottom: 1px solid var(--color-hover-bg);
-  }
-  nav:nth-child(2) {
-    width: 100dvw;
-    height: 100dvh;
-    padding: 16px;
-    display: none;
-    align-items: start;
-    justify-content: center;
-  }
-  nav:nth-child(2) ul {
-    height: max-content;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    align-items: start;
-    gap: 16px;
-  }
-  nav:nth-child(2) ul li {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid var(--color-hover-bg);
-    border-radius: 8px;
-  }
-  nav:nth-child(2) ul li a {
-    height: 100%;
-    width: 100%;
-    padding: 12px;
-  }
-  nav:nth-child(2).active {
-    display: flex;
   }
 }

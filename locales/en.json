@@ -10,5 +10,8 @@
     "nav_support": "Support",
     "nav_developers": "Developers",
     "nav_rules": "Rules",
-    "nav_services": "Services"
+    "nav_services": "Services",
+    "nav_login": "Login to account",
+    "nav_text_settings": "Settings",
+    "nav_text_navigation": "Navigation"
 }

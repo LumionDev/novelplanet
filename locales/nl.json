@@ -10,5 +10,8 @@
   "nav_support": "Ondersteuning",
   "nav_developers": "Ontwikkelaars",
   "nav_rules": "Regels",
-  "nav_services": "Diensten"
+  "nav_services": "Diensten",
+  "nav_login": "Inloggen in account",
+  "nav_text_settings": "Instellingen",
+  "nav_text_navigation": "Navigatie"
 }

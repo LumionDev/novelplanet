@@ -10,5 +10,8 @@
     "nav_support": "Поддержка",
     "nav_developers": "Разработчики",
     "nav_rules": "Правила",
-    "nav_services": "Сервисы"
+    "nav_services": "Сервисы",
+    "nav_login": "Войти в аккаунт",
+    "nav_text_settings": "Настройки",
+    "nav_text_navigation": "Навигация"
 }

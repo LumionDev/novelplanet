@@ -36,8 +36,25 @@ function applySystemTheme() {
   });
 }
 
+function updateDeviceView() {
+  const device = window.innerWidth <= 1024 ? 'mobile' : 'desktop';
+
+  const navPhone = document.getElementById('nav-phone');
+  const navModalPhone = document.getElementById('nav-modal-phone');
+
+  if (device === 'mobile') {
+    navPhone?.classList.add('visible');
+  } else {
+    navPhone?.classList.remove('visible');
+    navModalPhone?.classList.remove('active');
+  }
+};
+
 // Инициализация при загрузке
 window.addEventListener('DOMContentLoaded', () => {
+  // Инициализация при загрузке страницы
+  updateDeviceView();
+
   const theme = getCookie('theme');
   theme ? applyTheme(theme) : applySystemTheme();
 
@@ -74,32 +91,41 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-    const menu = document.getElementById('nav-menu');
-    const modal_phone = document.getElementById('nav-modal-phone');
+  const menu = document.getElementById('nav-menu');
+  const modal_phone = document.getElementById('nav-modal-phone');
 
-    if (menu && modal_phone) {
+  if (menu && modal_phone) {
     menu.addEventListener('click', () => {
         console.log('📲 Клик по меню!');
+        document.body.classList.toggle('body-lock');
         modal_phone.classList.toggle('active');
     });
-    }
+  }
 });
 
 // Обработчики темы
-document.getElementById('theme-light')?.addEventListener('click', () => {
-  setCookie('theme', 'light');
-  applyTheme('light');
-  location.reload();
+[
+  { ids: ['theme-light-phone', 'theme-light'], action: () => {
+    setCookie('theme', 'light');
+    applyTheme('light');
+  }},
+  { ids: ['theme-dark-phone', 'theme-dark'], action: () => {
+    setCookie('theme', 'dark');
+    applyTheme('dark');
+  }},
+  { ids: ['theme-system-phone', 'theme-system'], action: () => {
+    deleteCookie('theme');
+    applySystemTheme();
+  }}
+].forEach(({ ids, action }) => {
+  ids.forEach(id => {
+    const btn = document.getElementById(id);
+    btn?.addEventListener('click', () => {
+      action();
+      location.reload();
+    });
+  });
 });
 
-document.getElementById('theme-dark')?.addEventListener('click', () => {
-  setCookie('theme', 'dark');
-  applyTheme('dark');
-  location.reload();
-});
-
-document.getElementById('theme-system')?.addEventListener('click', () => {
-  deleteCookie('theme');
-  applySystemTheme();
-  location.reload();
-});
+// Обновление при изменении размера окна
+window.addEventListener('resize', updateDeviceView);
