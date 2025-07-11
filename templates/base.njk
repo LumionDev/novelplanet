@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ lng }}" dir="{{ dir }}">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Мой проект{% endblock %}</title>
-  <link rel="icon" href="/media/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/style.css">
+  {% block head%}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Базовый модуль{% endblock %}</title>
+    <link rel="icon" href="/media/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+  {% endblock %}
 </head>
 <body>
   <div class="preloader" id="preloader">

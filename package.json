@@ -9,6 +9,7 @@
     "i18next-http-middleware": "^3.7.4",
     "mobile-detect": "^1.4.5",
     "nunjucks": "^3.2.4",
+    "path": "^0.12.7",
     "simple-git": "^3.28.0"
   },
   "name": "novelplanet",

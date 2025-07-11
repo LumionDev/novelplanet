@@ -1,0 +1,76 @@
+.error {
+  width: 100dvw;
+  margin-top: 100px;
+  gap: 16px;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.error .image-info {
+  position: relative;
+}
+.error .image-info img {
+  width: 300px;
+  height: auto;
+}
+.error .image-info h3 {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--color-hover-text);
+  display: none;
+  position: absolute;
+  width: max-content;
+  top: 85%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  background: var(--color-bg);
+  padding: 8px 16px;
+  border-radius: 8px;
+  z-index: 100;
+  list-style: none;
+  gap: 16px;
+  border: 1px solid var(--color-hover-bg);
+}
+.error .image-info h3.visible {
+  display: block;
+}
+.error .image-info h3 a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 400;
+}
+.error h1 {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 80px;
+  color: var(--color-text);
+}
+.error p {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--color-hover-text);
+}
+
+@media screen and (max-width: 1024px) {
+  .error {
+    margin-top: 50px;
+    padding: 16px;
+    text-align: center;
+  }
+  .error h1 {
+    font-size: 64px;
+  }
+  .error p {
+    font-size: 16px;
+  }
+  .error h3 {
+    font-size: 16px;
+  }
+}

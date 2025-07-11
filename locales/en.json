@@ -4,6 +4,7 @@
     "error_not_found": "Page not found",
     "error_unauthorized": "Authorization required",
     "error_payment_required": "Payment required",
+    "error_copyright_image": "Image taken from",
     "nav_shop": "Shop",
     "nav_news": "News",
     "nav_faq": "FAQ",

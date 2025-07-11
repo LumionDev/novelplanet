@@ -193,7 +193,6 @@ nav {
 .switch-language {
   width: max-content;
   position: relative;
-  cursor: pointer;
 }
 .switch-language svg {
   width: 24px;

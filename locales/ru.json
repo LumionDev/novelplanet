@@ -4,6 +4,7 @@
     "error_not_found": "Страница не найдена",
     "error_unauthorized": "Требуется авторизация",
     "error_payment_required": "Платёж необходим",
+    "error_copyright_image": "Image taken from",
     "nav_shop": "Магазин",
     "nav_news": "Новости",
     "nav_faq": "FAQ",

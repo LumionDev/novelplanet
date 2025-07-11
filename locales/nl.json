@@ -4,6 +4,7 @@
   "error_not_found": "Pagina niet gevonden",
   "error_unauthorized": "Authenticatie vereist",
   "error_payment_required": "Betaling vereist",
+  "error_copyright_image": "Afbeelding afkomstig van",
   "nav_shop": "Winkel",
   "nav_news": "Nieuws",
   "nav_faq": "FAQ",

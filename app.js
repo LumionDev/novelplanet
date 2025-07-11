@@ -7,7 +7,7 @@ const i18next = require('i18next');
 const i18nextMiddleware = require('i18next-http-middleware');
 const Backend = require('i18next-fs-backend');
 const cookieParser = require('cookie-parser');
-const mobileDetect = require('mobile-detect');
+const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -50,8 +50,20 @@ app.use((req, res, next) => {
 });
 
 // SCSS компиляция
-const result = sass.compile('./scss/style.scss');
-fs.writeFileSync('./public/style.css', result.css);
+const inputDir = './scss';
+const outputDir = './public/css';
+
+// Получаем список всех SCSS-файлов
+fs.readdirSync(inputDir)
+  .filter(file => file.endsWith('.scss'))
+  .forEach(file => {
+    const inputPath = path.join(inputDir, file);
+    const outputPath = path.join(outputDir, file.replace('.scss', '.css'));
+
+    const result = sass.compile(inputPath);
+    fs.writeFileSync(outputPath, result.css);
+    console.log(`✅ Скомпилирован: ${file}`);
+  });
 
 // Nunjucks
 nunjucks.configure('templates', {

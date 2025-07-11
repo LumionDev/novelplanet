@@ -1,10 +1,22 @@
 {% extends "base.njk" %}
 
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/css/error.css">
+    <title>{% block title %}{{t('error_status')}}: {{status}}{% endblock %}</title>
+{% endblock %}
+
 {%block content%}
-    <img src="{{ picture }}" alt="">
-        <h1>{{t('error_status')}} {{ status }}</h1>
-        <p>{{ t(message) }}</p>
-    {% if status === 401 %}
-        <p>Пожалуйста войдите в аккаунт</p><a href="/login">Войти</a>
-    {% endif %}
+    <error class="error">
+        <div class="image-info">
+            <img src="{{ picture }}" alt="" id="error-image">
+            <h3 id="image-info">{{t("error_copyright_image")}} <a href="https://3dicons.co/" target="_blank">3dicons</a></h3>
+        </div>
+            <h1>{{ status }}</h1>
+            <p>{{ t(message) }}</p>
+        {% if status === 401 %}
+            <p>Пожалуйста войдите в аккаунт</p><a href="/login">Войти</a>
+        {% endif %}
+    </error>
+    <script src="/js/error.js"></script>
 {%endblock%}
